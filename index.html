@@ -1,20 +1,19 @@
-```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>دستیار هوشمند جمنای پرو</title>
     <style>
         :root {
             --bg-main: #f3f4f6;
-            --bg-sidebar: #111827;
+            --bg-sidebar: #1f2937;
             --sidebar-text: #f3f4f6;
-            --sidebar-hover: #1f2937;
-            --sidebar-active: #3b82f6;
+            --sidebar-hover: #374151;
+            --sidebar-active: #2563eb;
             --bg-chat: #ffffff;
             --text-main: #1f2937;
-            --text-muted: #6b7280;
+            --text-muted: #4b5563;
             --border-color: #e5e7eb;
             --header-bg: #ffffff;
             --user-msg-bg: #2563eb;
@@ -23,41 +22,32 @@
             --bot-msg-text: #1f2937;
             --input-bg: #ffffff;
             --accent-green: #10b981;
-            --radius-lg: 20px;
-            --radius-md: 14px;
-            --radius-sm: 8px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 14px rgba(0,0,0,0.06);
-            --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.1);
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --glass-blur: blur(16px);
         }
 
         [data-theme="dark"] {
-            --bg-main: #090d16;
-            --bg-sidebar: #05070a;
+            --bg-main: #111827;
+            --bg-sidebar: #0f172a;
             --sidebar-text: #e2e8f0;
-            --sidebar-hover: #111827;
-            --sidebar-active: #2563eb;
-            --bg-chat: #0f172a;
+            --sidebar-hover: #1e293b;
+            --sidebar-active: #3b82f6;
+            --bg-chat: #1f2937;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
-            --border-color: #1e293b;
-            --header-bg: #0f172a;
+            --border-color: #374151;
+            --header-bg: #1f2937;
             --user-msg-bg: #3b82f6;
             --user-msg-text: #ffffff;
-            --bot-msg-bg: #1e293b;
+            --bot-msg-bg: #374151;
             --bot-msg-text: #f3f4f6;
-            --input-bg: #1e293b;
-            --glass-bg: rgba(15, 23, 42, 0.85);
+            --input-bg: #111827;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Vazirmatn, IRANSans, system-ui, -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
         }
 
         body {
@@ -65,49 +55,36 @@
             color: var(--text-main);
             display: flex;
             height: 100vh;
-            height: 100dvh;
             overflow: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* سایدبار ناوبری و تاریخچه چت‌ها */
+        /* منوی کناری (Sidebar) */
         .sidebar {
-            width: 320px;
+            width: 280px;
             background-color: var(--bg-sidebar);
             color: var(--sidebar-text);
             display: flex;
             flex-direction: column;
             height: 100%;
             flex-shrink: 0;
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.3s ease;
             z-index: 40;
-            border-left: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .sidebar-header {
-            padding: 24px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
-            gap: 16px;
-        }
-
-        .app-logo {
-            display: flex;
-            align-items: center;
             gap: 12px;
-            font-size: 17px;
-            font-weight: 900;
-            color: #ffffff;
-            justify-content: center;
         }
 
         .new-chat-btn {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            background-color: var(--sidebar-active);
             color: white;
             border: none;
-            padding: 14px;
-            border-radius: var(--radius-md);
+            padding: 12px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: bold;
             font-size: 14px;
@@ -115,12 +92,11 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-            transition: all 0.2s;
+            transition: opacity 0.2s;
         }
 
-        .new-chat-btn:active {
-            transform: scale(0.97);
+        .new-chat-btn:hover {
+            opacity: 0.9;
         }
 
         .chat-list {
@@ -129,21 +105,20 @@
             padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
 
-        /* آیتم‌های لیست چت */
+        /* استایل آیتم‌های لیست چت */
         .chat-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 14px;
-            border-radius: var(--radius-md);
+            padding: 12px;
+            border-radius: 10px;
             cursor: pointer;
             background: transparent;
-            transition: all 0.2s;
-            gap: 10px;
-            position: relative;
+            transition: background-color 0.2s;
+            gap: 8px;
         }
 
         .chat-item:hover {
@@ -158,72 +133,37 @@
         .chat-item-info {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex: 1;
             overflow: hidden;
-        }
-
-        .chat-item-title-wrapper {
-            flex: 1;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
         }
 
         .chat-item-title {
-            font-size: 13.5px;
+            font-size: 13px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            color: rgba(255, 255, 255, 0.9);
         }
 
-        .chat-rename-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid var(--sidebar-active);
-            border-radius: var(--radius-sm);
-            padding: 4px 8px;
-            color: #ffffff;
-            font-size: 13.5px;
-            outline: none;
-        }
-
-        .chat-actions {
-            display: flex;
-            gap: 4px;
-            opacity: 0.3;
-            transition: opacity 0.2s;
-        }
-
-        .chat-item:hover .chat-actions, .chat-item.active .chat-actions {
-            opacity: 1;
-        }
-
-        .chat-action-btn {
+        .delete-chat-btn {
             background: transparent;
             border: none;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.4);
             cursor: pointer;
-            padding: 6px;
-            border-radius: var(--radius-sm);
+            padding: 4px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: color 0.2s, background-color 0.2s;
         }
 
-        .chat-action-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-        }
-
-        .chat-action-btn.delete:hover {
+        .delete-chat-btn:hover {
             color: #ef4444;
-            background-color: rgba(239, 68, 68, 0.15);
+            background-color: rgba(239, 68, 68, 0.1);
         }
 
-        /* ساختار بخش اصلی گفتگو */
+        /* بخش اصلی محتوای چت */
         .main-content {
             flex: 1;
             display: flex;
@@ -233,25 +173,22 @@
             position: relative;
         }
 
-        /* هدر با استایل شیشه‌ای */
+        /* هدر چت */
         .header {
-            background-color: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
+            background-color: var(--header-bg);
             border-bottom: 1px solid var(--border-color);
-            padding: 0 24px;
+            padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 64px;
-            box-shadow: var(--shadow-sm);
-            z-index: 10;
+            height: 60px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
         .header-right {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
         }
 
         .menu-toggle {
@@ -259,74 +196,60 @@
             border: none;
             color: var(--text-main);
             cursor: pointer;
-            display: none;
+            display: none; /* روی دسکتاپ مخفی است */
             align-items: center;
             justify-content: center;
-            padding: 8px;
-            border-radius: 50%;
-            transition: background-color 0.2s;
-        }
-
-        .menu-toggle:hover {
-            background-color: rgba(0,0,0,0.05);
+            padding: 4px;
         }
 
         .header-title {
-            font-size: 16px;
-            font-weight: 800;
+            font-size: 15px;
+            font-weight: bold;
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .icon-btn {
-            background-color: var(--input-bg);
+            background-color: var(--bg-main);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 10px 18px;
-            border-radius: 30px;
+            padding: 8px 12px;
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 13px;
-            font-weight: bold;
+            font-size: 12px;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s;
+            gap: 6px;
         }
 
-        .icon-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* کانتینر پیام‌ها */
+        /* کانتینر چت */
         .chat-container {
             flex: 1;
-            padding: 24px;
+            padding: 16px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 16px;
             background-color: var(--bg-chat);
         }
 
         .message {
-            max-width: 85%;
-            padding: 14px 20px;
-            border-radius: 22px;
-            font-size: 14.5px;
-            line-height: 1.8;
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.6;
             word-wrap: break-word;
-            animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            animation: slideUp 0.25s ease-out;
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -335,6 +258,7 @@
             color: var(--bot-msg-text);
             align-self: flex-start;
             border-top-right-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
 
         .user-message {
@@ -342,161 +266,134 @@
             color: var(--user-msg-text);
             align-self: flex-end;
             border-top-left-radius: 4px;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .system-message {
-            background-color: rgba(59, 130, 246, 0.08);
-            color: var(--sidebar-active);
+            background-color: rgba(0, 0, 0, 0.04);
+            color: var(--text-muted);
             align-self: center;
-            font-size: 12px;
-            font-weight: bold;
-            border-radius: 30px;
-            padding: 8px 20px;
+            font-size: 11px;
+            border-radius: 20px;
+            padding: 6px 14px;
             max-width: 90%;
             text-align: center;
-            border: 1px solid rgba(59, 130, 246, 0.15);
         }
 
-        /* کارت نمایش تصویر هنری نانو بنانا */
+        /* ساختار نمایش عکس‌های تولید شده */
         .image-card {
-            margin-top: 14px;
-            background: var(--bg-main);
-            border-radius: var(--radius-lg);
-            padding: 14px;
+            margin-top: 10px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 14px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 14px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
+            gap: 10px;
+            border: 1px dashed var(--border-color);
         }
 
         .ai-image {
             width: 100%;
-            max-width: 440px;
+            max-width: 380px;
             height: auto;
-            border-radius: var(--radius-md);
+            border-radius: 10px;
             display: block;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-color);
-        }
-
-        .image-actions {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .download-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background-color: var(--accent-green);
             color: white;
             border: none;
-            padding: 10px 22px;
-            border-radius: 30px;
-            font-size: 13px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
-            transition: all 0.2s;
+            gap: 6px;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(16, 185, 129, 0.3);
+            transition: transform 0.1s;
         }
 
-        .download-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+        .download-btn:active {
+            transform: scale(0.95);
         }
 
         .save-hint {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-muted);
             text-align: center;
-            line-height: 1.5;
+            margin-top: 2px;
         }
 
         /* کادر پایینی وارد کردن پیام */
         .input-area {
             background-color: var(--header-bg);
-            padding: 16px 24px;
+            padding: 12px 16px;
             display: flex;
-            gap: 12px;
+            gap: 8px;
             border-top: 1px solid var(--border-color);
             align-items: center;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.02);
         }
 
         .input-wrapper {
             flex: 1;
             position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .input-area input {
             width: 100%;
-            padding: 16px 24px;
+            padding: 14px 16px;
             border: 1px solid var(--border-color);
             border-radius: 30px;
             outline: none;
             background-color: var(--input-bg);
             color: var(--text-main);
-            font-size: 14.5px;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            box-shadow: var(--shadow-sm);
+            font-size: 14px;
+            padding-left: 10px;
         }
 
         .input-area input:focus {
             border-color: var(--user-msg-bg);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
         .action-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .action-btn {
             border: none;
-            padding: 14px 24px;
+            padding: 12px 18px;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             color: white;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-sm);
+            gap: 6px;
+            transition: opacity 0.2s;
         }
 
         .send-btn {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-        }
-
-        .send-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+            background-color: var(--user-msg-bg);
         }
 
         .image-btn {
-            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
-        }
-
-        .image-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
+            background-color: var(--accent-green);
         }
 
         .action-btn:disabled {
-            background: #cbd5e1 !important;
-            color: #94a3b8;
+            background-color: #cbd5e1 !important;
             cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
+            color: #94a3b8;
         }
 
         /* پس‌زمینه تیره برای بستن سایدبار در موبایل */
@@ -507,130 +404,11 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0,0,0,0.55);
+            background-color: rgba(0,0,0,0.4);
             z-index: 30;
-            backdrop-filter: blur(4px);
-            animation: fadeIn 0.2s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* کادرهای مودال اختصاصی برنامه */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(6px);
-        }
-
-        .modal.open {
-            display: flex;
-        }
-
-        .modal-content {
-            background-color: var(--bg-chat);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 500px;
-            padding: 24px;
-            box-shadow: var(--shadow-lg);
-            animation: zoomIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
-        }
-
-        .modal-title {
-            font-size: 16px;
-            font-weight: 800;
-        }
-
-        .modal-close-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            padding: 6px;
-            border-radius: 50%;
-        }
-
-        .modal-close-btn:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-
-        .modal-body {
-            font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-            border-radius: var(--radius-md);
-            background: var(--bg-main);
-            padding: 14px;
-            white-space: pre-wrap;
-            user-select: all;
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        /* اعلان‌های موقت گوشه صفحه */
-        .toast-container {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 110;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            pointer-events: none;
-        }
-
-        .toast {
-            background-color: var(--bg-sidebar);
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: bold;
-            box-shadow: var(--shadow-lg);
-            animation: slideUpToast 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            text-align: center;
-        }
-
-        @keyframes slideUpToast {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* بهینه‌سازی نهایی مخصوص موبایل و تبلت */
+        /* استایل‌های واکنش‌گرا (موبایل و تبلت) */
         @media (max-width: 768px) {
             .sidebar {
                 position: absolute;
@@ -652,24 +430,11 @@
                 display: flex;
             }
 
-            .header {
-                padding: 0 16px;
-                height: 58px;
-            }
-
-            .input-area {
-                padding: 12px 14px;
-            }
-
-            .input-area input {
-                padding: 14px 20px;
-                font-size: 14px;
-            }
-
             .action-btn {
-                padding: 12px 16px;
+                padding: 12px;
+                font-size: 11px;
             }
-
+            
             .action-btn span {
                 display: none;
             }
@@ -680,22 +445,21 @@
 
     <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
-    <!-- منوی کناری تاریخچه چت‌ها -->
+    <!-- منوی کناری (سایدبار چت‌ها) -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <div class="app-logo">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-                دستیار پیشرفته جمنای پرو
-            </div>
+            <h3 style="font-size: 15px; margin-bottom: 4px; text-align: center;">دستیار هوشمند جمنای پرو</h3>
             <button class="new-chat-btn" onclick="createNewChat()">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                شروع گفتگو جدید
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                چت جدید
             </button>
         </div>
-        <div class="chat-list" id="chatList"></div>
+        <div class="chat-list" id="chatList">
+            <!-- لیست چت‌ها در این‌جا لود می‌شود -->
+        </div>
     </div>
 
-    <!-- کانتینر اصلی گفتگو -->
+    <!-- بخش اصلی گفتگو -->
     <div class="main-content">
         <div class="header">
             <div class="header-right">
@@ -711,48 +475,28 @@
             </div>
         </div>
 
-        <div class="chat-container" id="chatContainer"></div>
+        <div class="chat-container" id="chatContainer">
+            <!-- پیام‌ها در این‌جا لود می‌شوند -->
+        </div>
 
         <div class="input-area">
             <div class="input-wrapper">
-                <input type="text" id="userInput" placeholder="چیزی بپرسید یا طرح عکس توصیف کنید..." onkeypress="handleKeyPress(event)">
+                <input type="text" id="userInput" placeholder="چیزی بپرسید یا عکس توصیف کنید..." onkeypress="handleKeyPress(event)">
             </div>
             <div class="action-buttons">
                 <button id="imgBtn" class="action-btn image-btn" onclick="generateImage()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                     <span>ساخت عکس ✨</span>
                 </button>
                 <button id="sendBtn" class="action-btn send-btn" onclick="sendTextMessage()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                    <span>ارسال پیام</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    <span>ارسال</span>
                 </button>
             </div>
         </div>
     </div>
-
-    <!-- مودال اشتراک‌گذاری گفتگو -->
-    <div class="modal" id="shareModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">اشتراک‌گذاری گفتگو</div>
-                <button class="modal-close-btn" onclick="closeShareModal()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-            </div>
-            <div class="modal-body" id="shareText"></div>
-            <div class="modal-footer">
-                <button class="icon-btn" onclick="copyShareText()" style="background-color: var(--sidebar-active); color: white;">کپی کل چت 📋</button>
-                <button class="icon-btn" onclick="closeShareModal()">بستن</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="toast-container" id="toastContainer"></div>
 
     <script>
-        // مقدار خالی API Key، پلتفرم به طور اتوماتیک آن را مقداردهی می‌کند
-        const apiKey = "";
-
         let chats = JSON.parse(localStorage.getItem('eitaa_chats')) || [];
         let activeChatId = localStorage.getItem('eitaa_active_chat_id') || null;
 
@@ -764,22 +508,6 @@
         const currentChatTitle = document.getElementById('currentChatTitle');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
-        const shareModal = document.getElementById('shareModal');
-        const shareText = document.getElementById('shareText');
-        const toastContainer = document.getElementById('toastContainer');
-
-        async function fetchWithRetry(url, options, maxRetries = 5) {
-            let delay = 1000;
-            for (let i = 0; i < maxRetries; i++) {
-                try {
-                    const response = await fetch(url, options);
-                    if (response.ok) return response;
-                } catch (e) {}
-                await new Promise(resolve => setTimeout(resolve, delay));
-                delay *= 2;
-            }
-            throw new Error("ارتباط برقرار نشد.");
-        }
 
         function initApp() {
             if (chats.length === 0) {
@@ -806,7 +534,7 @@
                 messages: [
                     {
                         sender: 'bot',
-                        text: 'سلام! به دستیار هوشمند جمنای پرو (Gemini Pro) خوش آمدید.\n\n• سوالات خود را بنویسید و دکمه <b>ارسال پیام</b> را بزنید.\n• برای تولید تصاویر هنری با نانو بنانا (Google Imagen 4.0)، طرح مدنظرتان را توصیف کنید و دکمه <b>ساخت عکس ✨</b> را لمس کنید.',
+                        text: 'سلام! من هوش مصنوعی جمنای (Gemini Pro) هستم. چطور می‌توانم کمکتان کنم؟ \n\n• برای گفتگو متن خود را بفرستید.\n• برای نقاشی و ساخت عکس، جزئیات آن را بنویسید و دکمه <b>ساخت عکس ✨</b> را بزنید.',
                         isImage: false
                     }
                 ]
@@ -840,111 +568,19 @@
             chats.forEach(chat => {
                 const item = document.createElement('div');
                 item.className = `chat-item ${chat.id === activeChatId ? 'active' : ''}`;
-                item.id = `item_${chat.id}`;
                 item.onclick = () => selectChat(chat.id);
 
                 item.innerHTML = `
                     <div class="chat-item-info">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity: 0.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                        <div class="chat-item-title-wrapper" id="title_wrapper_${chat.id}">
-                            <span class="chat-item-title" id="title_text_${chat.id}">${chat.title}</span>
-                        </div>
+                        <span class="chat-item-title">${chat.title}</span>
                     </div>
-                    <div class="chat-actions">
-                        <button class="chat-action-btn" title="تغییر نام چت" onclick="event.stopPropagation(); startRename('${chat.id}')">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                        </button>
-                        <button class="chat-action-btn" title="اشتراک‌گذاری" onclick="event.stopPropagation(); shareChatConversation('${chat.id}')">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
-                        </button>
-                        <button class="chat-action-btn delete" title="حذف چت" onclick="event.stopPropagation(); deleteChat('${chat.id}')">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                        </button>
-                    </div>
+                    <button class="delete-chat-btn" onclick="event.stopPropagation(); deleteChat('${chat.id}')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
                 `;
                 chatList.appendChild(item);
             });
-        }
-
-        function startRename(id) {
-            const wrapper = document.getElementById(`title_wrapper_${id}`);
-            const textSpan = document.getElementById(`title_text_${id}`);
-            if (!wrapper || !textSpan) return;
-
-            const currentTitle = textSpan.innerText;
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.className = 'chat-rename-input';
-            input.value = currentTitle;
-
-            wrapper.innerHTML = '';
-            wrapper.appendChild(input);
-            input.focus();
-            input.select();
-
-            const finishRename = () => {
-                const newTitle = input.value.trim() || 'گفتگو جدید';
-                const chat = chats.find(c => c.id === id);
-                if (chat) {
-                    chat.title = newTitle;
-                    saveToStorage();
-                    if (id === activeChatId) {
-                        currentChatTitle.innerText = newTitle;
-                    }
-                }
-                renderChatList();
-            };
-
-            input.onblur = finishRename;
-            input.onkeypress = (e) => {
-                if (e.key === 'Enter') {
-                    finishRename();
-                }
-            };
-        }
-
-        function shareChatConversation(id) {
-            const chat = chats.find(c => c.id === id);
-            if (!chat) return;
-
-            let textDump = `خلاصه گفتگو: ${chat.title}\n-------------------------\n`;
-            chat.messages.forEach(m => {
-                const label = m.sender === 'user' ? 'کاربر' : 'دستیار جمنای';
-                textDump += `${label}: ${m.text}\n\n`;
-            });
-
-            shareText.innerText = textDump;
-            shareModal.classList.add('open');
-        }
-
-        function closeShareModal() {
-            shareModal.classList.remove('open');
-        }
-
-        function copyShareText() {
-            const textToCopy = shareText.innerText;
-            const tempTextArea = document.createElement("textarea");
-            tempTextArea.value = textToCopy;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            try {
-                document.execCommand('copy');
-                showToast("متن چت با موفقیت کپی شد! 📋");
-            } catch (err) {
-                showToast("خطا در کپی خودکار؛ لطفاً متن را دستی کپی کنید.");
-            }
-            document.body.removeChild(tempTextArea);
-            closeShareModal();
-        }
-
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerText = message;
-            toastContainer.appendChild(toast);
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
         }
 
         function selectChat(id) {
@@ -964,7 +600,6 @@
             }
             saveToStorage();
             initApp();
-            showToast("گفتگو با موفقیت حذف شد.");
         }
 
         function toggleSidebar() {
@@ -972,6 +607,7 @@
             overlay.classList.toggle('open');
         }
 
+        // سیستم هوشمند دانلود عکس با مهار تحریم‌ها و مشکلات CORS
         async function forceDownloadImage(url, filename) {
             try {
                 const response = await fetch(url);
@@ -980,15 +616,14 @@
                 
                 const link = document.createElement('a');
                 link.href = blobUrl;
-                link.download = filename || 'Google-Imagen-Art.png';
+                link.download = filename || 'ai-image.png';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
                 URL.revokeObjectURL(blobUrl);
-                showToast("تصویر با موفقیت ذخیره شد! 🎉");
             } catch (error) {
+                // اگر کرس اجازه دانلود نداد، عکس را در تب جدید برای ذخیره باز کن
                 window.open(url, '_blank');
-                showToast("تصویر باز شد. جهت دانلود انگشت خود را روی آن نگه دارید.");
             }
         }
 
@@ -997,7 +632,7 @@
             messageDiv.className = `message ${className}`;
             
             if (isImage) {
-                messageDiv.innerText = 'تصویر تولید شده با مدل Google Imagen 4.0:';
+                messageDiv.innerText = 'بفرمایید! تصویر نهایی شما آماده شد:';
                 
                 const card = document.createElement('div');
                 card.className = 'image-card';
@@ -1005,26 +640,22 @@
                 const img = document.createElement('img');
                 img.src = text;
                 img.className = 'ai-image';
-                img.alt = 'نقاشی هوش مصنوعی گوگل';
+                img.alt = 'تصویر ساخته شده توسط هوش مصنوعی';
                 
-                const imgActions = document.createElement('div');
-                imgActions.className = 'image-actions';
-
                 const downloadBtn = document.createElement('button');
                 downloadBtn.className = 'download-btn';
                 downloadBtn.innerHTML = `
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    دانلود مستقیم تصویر 💾
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    دانلود مستقیم تصویر
                 `;
-                downloadBtn.onclick = () => forceDownloadImage(text, `Imagen_NanoBanana_${Date.now()}.png`);
+                downloadBtn.onclick = () => forceDownloadImage(text, `AI_Image_${Date.now()}.png`);
 
                 const hint = document.createElement('div');
                 hint.className = 'save-hint';
-                hint.innerText = '💡 راهنما: همچنین می‌توانید انگشت خود را روی تصویر نگه دارید تا گزینه ذخیره در گالری ظاهر شود.';
+                hint.innerText = '💡 در گوشی موبایل، می‌توانید انگشت خود را روی عکس نگه دارید و گزینه ذخیره را بزنید.';
 
-                imgActions.appendChild(downloadBtn);
                 card.appendChild(img);
-                card.appendChild(imgActions);
+                card.appendChild(downloadBtn);
                 card.appendChild(hint);
                 messageDiv.appendChild(card);
             } else {
@@ -1048,6 +679,7 @@
             }
         }
 
+        // بخش گفتگو با هوش مصنوعی جمنای
         async function sendTextMessage() {
             const text = userInput.value.trim();
             if (text === '') return;
@@ -1057,95 +689,107 @@
             userInput.value = '';
             setLoading(true);
 
-            const loadingDiv = appendMessageToUI('جمنای پرو در حال تحلیل و پاسخ...', 'bot-message system-message');
+            const loadingDiv = appendMessageToUI('جمنای در حال فکر کردن...', 'bot-message system-message');
 
             try {
-                const response = await fetchWithRetry(
-                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
-                    {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{ parts: [{ text: text }] }],
-                            systemInstruction: { parts: [{ text: "شما هوش مصنوعی پیشرفته Gemini (جمنای) هستید که توسط شرکت گوگل توسعه یافته است. پاسخ‌های خود را کاملاً هوشمندانه، کامل، دوستانه، و به زبان فارسی بسیار شیوا، شیرین و روان ارائه دهید." }] }
-                        })
-                    }
-                );
+                const systemPrompt = "شما هوش مصنوعی Gemini هستید که توسط گوگل توسعه یافته است. پاسخ‌های خود را کاملاً هوشمندانه، دوستانه، و به زبان فارسی روان بدهید.";
+                const response = await fetch('https://text.pollinations.ai/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: [
+                            { role: 'system', content: systemPrompt },
+                            { role: 'user', content: text }
+                        ],
+                        model: 'openai',
+                        private: true
+                    })
+                });
 
-                const data = await response.json();
+                const data = await response.text();
                 loadingDiv.remove();
 
-                const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (aiResponse) {
-                    appendMessageToUI(aiResponse, 'bot-message');
-                    saveMessageToActiveChat(aiResponse, 'bot');
+                if (data) {
+                    appendMessageToUI(data, 'bot-message');
+                    saveMessageToActiveChat(data, 'bot');
                 } else {
-                    const errMsg = 'جمنای نتوانست پاسخی برای این پیام آماده کند. لطفاً پیام دیگری بنویسید.';
+                    const errMsg = 'پاسخی دریافت نشد. لطفاً دوباره دکمه ارسال را بزنید.';
                     appendMessageToUI(errMsg, 'bot-message');
                     saveMessageToActiveChat(errMsg, 'bot');
                 }
             } catch (error) {
                 loadingDiv.remove();
-                const errMsg = 'خطا در اتصال به پلتفرم هوش مصنوعی گوگل جمنای! لطفاً وضعیت شبکه خود را مجدداً بررسی نمایید.';
+                const errMsg = 'خطا در ارتباط با سرور جمنای! لطفاً اینترنت خود را چک کنید.';
                 appendMessageToUI(errMsg, 'bot-message');
                 saveMessageToActiveChat(errMsg, 'bot');
             }
             setLoading(false);
         }
 
+        // سیستم ترجمه و تصویرسازی انقلابی بدون چرت‌وپرت‌نویسی!
+        async function translatePromptToEnglish(persianPrompt) {
+            try {
+                // با کمک هوش مصنوعی متن فارسی را به پرامپت انگلیسی غنی‌شده Stable Diffusion تبدیل می‌کنیم
+                const translationResponse = await fetch('https://text.pollinations.ai/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: [
+                            { role: 'system', content: 'You are an elite prompt engineer. Translate the user\'s Persian image description into a highly detailed, professional English image generation prompt for Stable Diffusion (Flux). Output ONLY the English prompt. Do not add explanations, intros, or markdown formatting.' },
+                            { role: 'user', content: persianPrompt }
+                        ],
+                        model: 'openai',
+                        private: true
+                    })
+                });
+                const englishPrompt = await translationResponse.text();
+                return englishPrompt.trim() || persianPrompt;
+            } catch (error) {
+                console.error("Translation failed, using raw prompt", error);
+                return persianPrompt; // برگشت به پله اول در صورت خطا
+            }
+        }
+
         async function generateImage() {
             const text = userInput.value.trim();
             if (text === '') {
-                showToast("لطفاً توصیف تصویر خود را بنویسید.");
+                alert('لطفاً ابتدا توصیف عکس خود را به صورت متنی بنویسید!');
                 return;
             }
 
-            appendMessageToUI(`درخواست تصویر با نانو بنانا: "${text}"`, 'user-message');
-            saveMessageToActiveChat(`درخواست تصویر با نانو بنانا: "${text}"`, 'user');
+            appendMessageToUI(`درخواست ساخت تصویر: "${text}"`, 'user-message');
+            saveMessageToActiveChat(`درخواست ساخت تصویر: "${text}"`, 'user');
             userInput.value = '';
             setLoading(true);
 
-            const loadingDiv = appendMessageToUI('درحال بهینه‌سازی پرامپت فارسی و نقاشی با نانو بنانا (Google Imagen)... 🎨', 'bot-message system-message');
+            const loadingDiv = appendMessageToUI('درحال بهینه‌سازی توصیف و نقاشی اثر شما... (کمی صبور باشید)', 'bot-message system-message');
 
             try {
-                const promptOptimizeUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-                const translationResponse = await fetchWithRetry(promptOptimizeUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: `Translate and dramatically enrich this Persian text into a highly descriptive, professional English text-to-image prompt to produce an artistic masterpiece: "${text}". Output only the English translation prompt, without any prefix.` }] }]
-                    })
-                });
-                const translateData = await translationResponse.json();
-                const englishPrompt = translateData.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || text;
+                // ۱. ترجمه و حرفه‌ای‌سازی پرامپت
+                const optimizedEnglishPrompt = await translatePromptToEnglish(text);
+                
+                // ۲. ارسال پرامپت انگلیسی به بهترین موتور نقاش
+                const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(optimizedEnglishPrompt)}?width=1024&height=1024&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
+                
+                const img = new Image();
+                img.src = imageUrl;
+                
+                img.onload = function() {
+                    loadingDiv.remove();
+                    appendMessageToUI(imageUrl, 'bot-message', true);
+                    saveMessageToActiveChat(imageUrl, 'bot', true);
+                };
 
-                const imagenUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
-                const response = await fetchWithRetry(imagenUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        instances: [{ prompt: englishPrompt }],
-                        parameters: { sampleCount: 1 }
-                    })
-                });
-
-                const data = await response.json();
-                loadingDiv.remove();
-
-                const base64Bytes = data.predictions?.[0]?.bytesBase64Encoded;
-                if (base64Bytes) {
-                    const finalImgUrl = `data:image/png;base64,${base64Bytes}`;
-                    appendMessageToUI(finalImgUrl, 'bot-message', true);
-                    saveMessageToActiveChat(finalImgUrl, 'bot', true);
-                } else {
-                    const errMsg = 'سیستم نانو بنانا به علت وجود کلمات فیلتر شده نتوانست این تصویر را بسازد. لطفاً طرح دیگری را بنویسید.';
+                img.onerror = function() {
+                    loadingDiv.remove();
+                    const errMsg = 'ساخت عکس با خطا مواجه شد. لطفاً دوباره دکمه ساخت عکس را بزنید.';
                     appendMessageToUI(errMsg, 'bot-message');
                     saveMessageToActiveChat(errMsg, 'bot');
-                }
+                };
 
             } catch (error) {
                 loadingDiv.remove();
-                const errMsg = 'خطا در ارتباط با سرور تصویرساز رسمی گوگل؛ لطفاً مجدداً امتحان کنید.';
+                const errMsg = 'خطا در ارتباط با سرور تصویرساز.';
                 appendMessageToUI(errMsg, 'bot-message');
                 saveMessageToActiveChat(errMsg, 'bot');
             }
@@ -1188,5 +832,3 @@
     </script>
 </body>
 </html>
-
-```
